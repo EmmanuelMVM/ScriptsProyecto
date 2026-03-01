@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Descargar Docker
+sudo apt install docker.io -y
+sudo apt install docker-compose -y
+
 # Descomprimir el archivo Docker/servidor-web
 sudo unzip Docker/servidor-web
 
