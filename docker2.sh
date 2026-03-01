@@ -20,6 +20,10 @@ sudo adduser backupuser
 
 # Crear el directorio para los respaldos de PostgreSQL
 mkdir -p /home/backupuser/postgres_backups
+mkdir -p ~/.ssh
+touch ~/.ssh/authorized_keys
+chmod 700 ~./ssh
+chmod 600 ~/.ssh/authorized_keys
 
 # Ver la IP
 ip a
