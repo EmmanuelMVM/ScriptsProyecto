@@ -6,7 +6,7 @@ sudo apt install docker-compose -y
 
 # Descomprimir el archivo Docker/servidor-web
 sudo unzip Docker/servidor-web
-
+mv Docker/servidor-web /home/usuario1/
 # Cambiar al directorio del servidor web
 cd ~/servidor-web
 
