@@ -4,6 +4,9 @@
 sudo apt install docker.io -y
 sudo apt install docker-compose -y
 
+# Descargar configuraciones
+git clone https://github.com/EmmanuelMVM/Docker.git
+
 # Descomprimir el archivo Docker/servidor-web
 sudo unzip Docker/servidor-web
 # Cambiar al directorio del servidor web
