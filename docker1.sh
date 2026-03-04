@@ -7,8 +7,11 @@ sudo apt install docker-compose -y
 # Descargar configuraciones
 git clone https://github.com/EmmanuelMVM/Docker.git
 
+# Entrar en el repositorio Docker
+cd /Docker
+
 # Descomprimir el archivo Docker/servidor-web
-sudo unzip Docker/servidor-web
+sudo unzip servidor-web.zip
 # Cambiar al directorio del servidor web
 cd ~/servidor-web
 
