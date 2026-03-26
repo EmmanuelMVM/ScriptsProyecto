@@ -12,6 +12,7 @@ cd /Docker
 
 # Descomprimir el archivo Docker/servidor-web
 sudo unzip servidor-web.zip
+mv mysql_backup.sh /home/proyecto/mysql_backup.sh
 # Cambiar al directorio del servidor web
 cd ~/servidor-web
 
@@ -48,8 +49,8 @@ sudo docker exec -it bind9_dns named-checkconf
 sudo docker exec -it bind9_dns named-checkzone caremind.test /etc/bind9/db.caremind.test
 
 # Hacer consultas DNS
-dig @127.0.0.1 -p 5353 caremind.test
-dig @127.0.0.1 -p 5353 caremind.test MX
+dig @127.0.0.1 -p 53 caremind.test
+dig @127.0.0.1 -p 53 caremind.test MX
 
 # Verificar puertos relacionados con el correo
 sudo ss -tulpn | grep -E ':25|:587|:148|:993'
@@ -61,30 +62,30 @@ openssl s_client -connect localhost:993
 sudo docker-compose up -d mailserver
 
 # Agregar un correo de prueba al servidor
-sudo docker exec -it mailserver setupt email add usuario@caremind.test password123
+sudo docker exec -it mailserver setupt email add notificaciones@caremind.test password123
 sudo docker exec -it mailserver setup email list
 
 # Instalar Thunderbird
 sudo apt install thunderbird -y
 
-# Mover el script de respaldo de PostgreSQL a una ubicación global
-sudo mv backup_postgres.sh /usr/local/bin/backup_postgres.sh
-
 # Crear directorios para respaldos y logs
-sudo mkdir -p /var/backups/postgres
-sudo mkdir -p /var/log
-sudo touch -p /var/log/postgres_backup.log
+sudo mkdir -p /home/proyecto/backups/mysql
+sudo touch -p /home/proyecto/backups/mysql_backup.log
 
 # Asegurarse de que el script sea ejecutable
-sudo chmod +x /usr/local/bin/backup_postgres.sh
+sudo chmod +x /home/proyecto/backups/mysql/mysql_backup.sh
+
+ssh backupuser@192.168.x.x "mkdir -p /home/backupuser/mysql_backups"
 
 # Generar una clave SSH para el usuario de respaldo
-ssh-keygen -t rsa -b 4096
+ssh-keygen -t rsa -b 4096 -f ~/.ssh/mysql_backup_key
 
 # Copiar la clave SSH al servidor de respaldo
-sudo ssh-copy-id backupuser@192.168.1.5
+ssh-copy-id -i ~/.ssh/mysql_backup_key.pub backupuser@192.168.x.x
 
 # Configurar el cron para el respaldo automático
 sudo crontab -e
 # Agregar la siguiente línea al crontab:
 # 1 0 * * * /usr/local/backupuser_postgres.sh
+
+ssh -i ~/.ssh/mysql_backup_key backupuser@192.168.x.x
