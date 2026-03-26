@@ -75,8 +75,6 @@ sudo touch -p /home/proyecto/backups/mysql_backup.log
 # Asegurarse de que el script sea ejecutable
 sudo chmod +x /home/proyecto/backups/mysql/mysql_backup.sh
 
-ssh backupuser@192.168.x.x "mkdir -p /home/backupuser/mysql_backups"
-
 # Generar una clave SSH para el usuario de respaldo
 ssh-keygen -t rsa -b 4096 -f ~/.ssh/mysql_backup_key
 
